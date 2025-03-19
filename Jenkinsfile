@@ -20,7 +20,7 @@ pipeline {
         stage('Git: Code Checkout') {
             steps {
                 script{
-                    code_checkout("https://github.com/sang2410/blog-project.git","main")
+                  git branch: 'main', url: 'https://github.com/sang2410/blog-project.git'
                 }
             }
         }
