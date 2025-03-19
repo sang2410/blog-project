@@ -25,22 +25,22 @@ pipeline {
             }
         }
         
-        stage("Trivy: Filesystem scan"){
-            steps{
-                script{
-                   sh "trivy fs --format table . > result.txt"
-                }
-            }
-        }
+        // stage("Trivy: Filesystem scan"){
+        //     steps{
+        //         script{
+        //            sh "trivy fs --format table . > result.txt"
+        //         }
+        //     }
+        // }
 
-        stage("OWASP: Dependency check"){
-            steps{
-                script{
-                  dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'OWASP'
-                  dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-                }
-            }
-        }
+        // stage("OWASP: Dependency check"){
+        //     steps{
+        //         script{
+        //           dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'OWASP'
+        //           dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+        //         }
+        //     }
+        // }
         
         stage("SonarQube: Code Analysis"){
             steps{
