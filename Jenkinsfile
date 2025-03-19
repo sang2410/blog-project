@@ -24,7 +24,7 @@ pipeline {
         stage('Git: Code Checkout') {
             steps {
                 script{
-                    code_checkout("https://github.com/DevMadhup/Wanderlust-Mega-Project.git","main")
+                    code_checkout("https://github.com/sang2410/blog-project.git","main")
                 }
             }
         }
@@ -32,7 +32,7 @@ pipeline {
         stage("Trivy: Filesystem scan"){
             steps{
                 script{
-                    trivy_scan()
+                   sh "trivy fs --format table . > result.txt"
                 }
             }
         }
@@ -40,7 +40,8 @@ pipeline {
         stage("OWASP: Dependency check"){
             steps{
                 script{
-                    owasp_dependency()
+                  dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'OWASP'
+                  dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
                 }
             }
         }
@@ -48,7 +49,11 @@ pipeline {
         stage("SonarQube: Code Analysis"){
             steps{
                 script{
-                    sonarqube_analysis("Sonar","wanderlust","wanderlust")
+                    withSonarQubeEnv(sonar-server) {
+                        sh 'sonar-scanner -Dsonar.projectKey=front-end-blog
+                                          -Dsonar.sources=. '
+
+                 }
                 }
             }
         }
@@ -56,7 +61,10 @@ pipeline {
         stage("SonarQube: Code Quality Gates"){
             steps{
                 script{
-                    sonarqube_code_quality()
+                    timeout(time: 1, unit: "MINUTES") {
+                    waitForQualityGate abortPipeline: false
+                     }
+
                 }
             }
         }
