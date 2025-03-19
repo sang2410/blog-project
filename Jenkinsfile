@@ -48,7 +48,8 @@ pipeline {
                     withSonarQubeEnv('sonar-server') {
                         sh '''  sonar-scanner \
                                -Dsonar.projectKey=front-end-blog \
-                               -Dsonar.sources=. \ '''
+                               -Dsonar.sources=.
+                             '''
                  }
                 }
             }
