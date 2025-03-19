@@ -1,11 +1,7 @@
 
 pipeline {
     agent {label 'Node'}
-    
-    environment{
-        SONAR_HOME = tool "Sonar"
-    }
-    
+   
     parameters {
         string(name: 'FRONTEND_DOCKER_TAG', defaultValue: '', description: 'Setting docker image for latest push')
         string(name: 'BACKEND_DOCKER_TAG', defaultValue: '', description: 'Setting docker image for latest push')
@@ -49,11 +45,10 @@ pipeline {
         stage("SonarQube: Code Analysis"){
             steps{
                 script{
-                    withSonarQubeEnv(sonar-server) {
-                        sh '  sonar-scanner \
+                    withSonarQubeEnv('sonar-server') {
+                        sh '''  sonar-scanner \
                                -Dsonar.projectKey=front-end-blog \
-                               -Dsonar.sources=. \
-
+                               -Dsonar.sources=. \ '''
                  }
                 }
             }
@@ -111,7 +106,7 @@ pipeline {
         stage("Docker: Push to DockerHub"){
             steps{
                 script{
-                    withDockerRegistry(credentialsId: 'docker-cred') {
+                    withDockerRegistry(credentialsId: 'docker-cred', url: 'https://index.docker.io/v1/') {
                           sh "docker push  nguyenchisang/project-backend:${params.BACKEND_DOCKER_TAG}"
                             sh "docker push  nguyenchisang/project:${params.FRONTEND_DOCKER_TAG}"
 }
