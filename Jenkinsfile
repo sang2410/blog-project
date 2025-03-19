@@ -1,6 +1,6 @@
 
 pipeline {
-    agent {label 'Node'}
+    agent any
    
     parameters {
         string(name: 'FRONTEND_DOCKER_TAG', defaultValue: '', description: 'Setting docker image for latest push')
