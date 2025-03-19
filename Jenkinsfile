@@ -1,4 +1,4 @@
-@Library('Shared') _
+
 pipeline {
     agent {label 'Node'}
     
@@ -50,8 +50,9 @@ pipeline {
             steps{
                 script{
                     withSonarQubeEnv(sonar-server) {
-                        sh 'sonar-scanner -Dsonar.projectKey=front-end-blog
-                                          -Dsonar.sources=. '
+                        sh '  sonar-scanner \
+                               -Dsonar.projectKey=front-end-blog \
+                               -Dsonar.sources=. \
 
                  }
                 }
@@ -69,39 +70,39 @@ pipeline {
             }
         }
         
-        stage('Exporting environment variables') {
-            parallel{
-                stage("Backend env setup"){
-                    steps {
-                        script{
-                            dir("Automations"){
-                                sh "bash updatebackendnew.sh"
-                            }
-                        }
-                    }
-                }
+        // stage('Exporting environment variables') {
+        //     parallel{
+        //         stage("Backend env setup"){
+        //             steps {
+        //                 script{
+        //                     dir("Automations"){
+        //                         sh "bash updatebackendnew.sh"
+        //                     }
+        //                 }
+        //             }
+        //         }
                 
-                stage("Frontend env setup"){
-                    steps {
-                        script{
-                            dir("Automations"){
-                                sh "bash updatefrontendnew.sh"
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        //         stage("Frontend env setup"){
+        //             steps {
+        //                 script{
+        //                     dir("Automations"){
+        //                         sh "bash updatefrontendnew.sh"
+        //                     }
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         
         stage("Docker: Build Images"){
             steps{
                 script{
                         dir('backend'){
-                            docker_build("wanderlust-backend-beta","${params.BACKEND_DOCKER_TAG}","madhupdevops")
+                             sh "docker build -t nguyenchisang/project-backend:${params.BACKEND_DOCKER_TAG} ."
                         }
                     
                         dir('frontend'){
-                            docker_build("wanderlust-frontend-beta","${params.FRONTEND_DOCKER_TAG}","madhupdevops")
+                             sh "docker build -t nguyenchisang/project:${params.FRONTEND_DOCKER_TAG} ."
                         }
                 }
             }
@@ -110,8 +111,10 @@ pipeline {
         stage("Docker: Push to DockerHub"){
             steps{
                 script{
-                    docker_push("wanderlust-backend-beta","${params.BACKEND_DOCKER_TAG}","madhupdevops") 
-                    docker_push("wanderlust-frontend-beta","${params.FRONTEND_DOCKER_TAG}","madhupdevops")
+                    withDockerRegistry(credentialsId: 'docker-cred') {
+                          sh "docker push  nguyenchisang/project-backend:${params.BACKEND_DOCKER_TAG}"
+                            sh "docker push  nguyenchisang/project:${params.FRONTEND_DOCKER_TAG}"
+}
                 }
             }
         }
