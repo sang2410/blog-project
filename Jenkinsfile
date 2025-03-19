@@ -33,14 +33,14 @@ pipeline {
         //     }
         // }
 
-        // stage("OWASP: Dependency check"){
-        //     steps{
-        //         script{
-        //           dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'OWASP'
-        //           dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-        //         }
-        //     }
-        // }
+        stage("OWASP: Dependency check"){
+            steps{
+                script{
+                  dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'OWASP'
+                  dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+                }
+            }
+        }
         
         stage("SonarQube: Code Analysis"){
             steps{
