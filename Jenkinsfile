@@ -32,7 +32,7 @@ pipeline {
                 dir('backend') {
                     withSonarQubeEnv('sonar-server') {
                         sh '''  
-                            sonar-scanner \
+                             $SCANNER_HOME/bin/sonar-scanner \
                             -Dsonar.projectKey=back-end-blog \
                             -Dsonar.sources=.
                         '''
