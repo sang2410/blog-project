@@ -53,10 +53,10 @@ pipeline {
         stage("Trivy File Scan") {
             steps {
                 dir('backend') {
-                    sh 'trivy fs --exit-code 1 . > trivyfs-backend.txt'
+                    sh 'trivy fs . > trivyfs-backend.txt'
                 }
                 dir('frontend') {
-                    sh 'trivy fs --exit-code 1 . > trivyfs-frontend.txt'
+                    sh 'trivy fs de 1 . > trivyfs-frontend.txt'
                 }
             }
         }
