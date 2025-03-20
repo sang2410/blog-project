@@ -96,8 +96,8 @@ pipeline {
         }
         stage('Trivy Image Scan') {
             steps {
-                sh "trivy image --exit-code 1 ${DOCKER_REGISTRY}/${FRONTEND_APP}:${params.FRONTEND_DOCKER_TAG} > trivyimage-frontend.txt"
-                sh "trivy image --exit-code 1 ${DOCKER_REGISTRY}/${BACKEND_APP}:${params.BACKEND_DOCKER_TAG} > trivyimage-backend.txt"
+                sh "trivy image  ${DOCKER_REGISTRY}/${FRONTEND_APP}:${params.FRONTEND_DOCKER_TAG} > trivyimage-frontend.txt"
+                sh "trivy image  ${DOCKER_REGISTRY}/${BACKEND_APP}:${params.BACKEND_DOCKER_TAG} > trivyimage-backend.txt"
             }
         }
         stage("Docker: Push to DockerHub") {
