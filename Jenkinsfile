@@ -25,6 +25,26 @@ pipeline {
                 git branch: 'main', url: "${GIT_REPO}"
             }
         }
+        stage('Run Tests') {
+            parallel {
+                stage('Frontend Tests') {
+                    steps {
+                        dir('frontend') {
+                            sh 'npm install'
+                            sh 'npm test'
+                        }
+                    }
+                }
+                stage('Backend Tests') {
+                    steps {
+                        dir('backend') {
+                            sh 'npm install'
+                            sh 'npm test'
+                        }
+                    }
+                }
+            }
+        }
         stage("SonarQube: Code Analysis") {
             steps {
                 dir('frontend') {
@@ -56,7 +76,7 @@ pipeline {
                     sh 'trivy fs . > trivyfs-backend.txt'
                 }
                 dir('frontend') {
-                    sh 'trivy fs de 1 . > trivyfs-frontend.txt'
+                    sh 'trivy fs . > trivyfs-frontend.txt'
                 }
             }
         }
