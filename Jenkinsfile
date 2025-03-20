@@ -77,7 +77,7 @@ pipeline {
                 dir('backend') {
                     sh 'trivy fs . > trivyfs.txt'
                 }
-            }
+            }}
         }stage('Docker Image Build') {
             steps {
                 script {
