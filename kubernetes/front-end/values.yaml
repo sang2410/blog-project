@@ -10,3 +10,6 @@ service:
 configmap:
   data:
     VITE_API_PATH: "http://project-backend-service:31100"
+ingress:
+  # className:gce
+  host: ""
