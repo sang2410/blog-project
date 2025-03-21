@@ -6,6 +6,6 @@ image:
 service:
   type: ClusterIP
   port: 6379
-secret:
-  data:
-    REDIS_PASSWORD: "cmVkaXNwYXNz"  # base64: "redispass"
+# secret:
+#   data:
+#     REDIS_PASSWORD: "cmVkaXNwYXNz"  # base64: "redispass"

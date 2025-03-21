@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name }}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        ports:
+        - containerPort: {{ .Values.service.port }}
+        # env:
+        # - name: MONGO_INITDB_DATABASE
+        #   valueFrom:
+        #     configMapKeyRef:
+        #       name: {{ .Chart.Name }}-config
+        #       key: MONGO_INITDB_DATABASE
+        # - name: MONGO_INITDB_ROOT_USERNAME
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: {{ .Chart.Name }}-secret
+        #       key: MONGO_INITDB_ROOT_USERNAME
+        # - name: MONGO_INITDB_ROOT_PASSWORD
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: {{ .Chart.Name }}-secret
+        #       key: MONGO_INITDB_ROOT_PASSWORD
+        volumeMounts:
+        - name: mongo-storage
+          mountPath: /data/db  # Đường dẫn mặc định lưu trữ của MongoDB
+      # volumes:
+      # - name: mongo-storage
+      #   persistentVolumeClaim:
+      #     claimName: {{ .Chart.Name }}-pvc
+volumeClaimTemplates:
+  - metadata:
+      name: mongo-storage
+    spec:
+      storageClassName: {{ .Values.persistence.storageClass }}
+      accessModes:
+        - {{ .Values.persistence.accessMode }}
+      resources:
+        requests:
+          storage: {{ .Values.persistence.size }}
