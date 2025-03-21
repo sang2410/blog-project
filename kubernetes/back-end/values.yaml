@@ -2,7 +2,7 @@ replicaCount: 2
 image:
   repository: nguyenchisang/project-backend
   tag: "latest"  # Pipeline sẽ cập nhật tag này
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
 service:
   type: ClusterIP
   port: 8080  # Thay đổi port nếu backend dùng port khác
