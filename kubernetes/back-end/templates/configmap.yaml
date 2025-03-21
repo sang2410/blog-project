@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-config
+data:
+  MONGODB_URI: {{ .Values.configmap.mongodbUri | quote }}
+  REDIS_URL: {{ .Values.configmap.redisUrl | quote }}
+  FRONTEND_URL: {{ .Values.configmap.FRONTEND_URL | quote }}

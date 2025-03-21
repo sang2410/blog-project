@@ -1,0 +1,8 @@
+replicaCount: 1
+image:
+  repository: nguyenchisang/project-frontend
+  tag: "latest"  # Pipeline sẽ cập nhật tag này
+  pullPolicy: IfNotPresent
+service:
+  type: ClusterIP
+  port: 80

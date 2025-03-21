@@ -1,0 +1,4 @@
+apiVersion: v2
+name: project-redis
+description: Redis Helm chart
+version: 0.1.0

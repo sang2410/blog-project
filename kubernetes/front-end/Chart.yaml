@@ -1,0 +1,4 @@
+apiVersion: v2
+name: project-frontend
+description: Helm chart for frontend application
+version: 0.1.0
