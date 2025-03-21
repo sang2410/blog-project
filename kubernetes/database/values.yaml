@@ -17,4 +17,4 @@ persistence:
   enabled: true
   storageClass: "standard"  # StorageClass mặc định của GKE
   accessMode: ReadWriteOnce
-  size: 10i
+  size: 10Gi

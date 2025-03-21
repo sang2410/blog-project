@@ -3,6 +3,7 @@ kind: StatefulSet
 metadata:
   name: {{ .Chart.Name }}
 spec:
+  serviceName: {{ .Chart.Name }}-service  # Thêm dòng này
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
@@ -17,6 +18,10 @@ spec:
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         ports:
         - containerPort: {{ .Values.service.port }}
+        volumeMounts:
+        - name: mongo-storage
+          mountPath: /data/db
+        # Bỏ comment nếu cần biến môi trường
         # env:
         # - name: MONGO_INITDB_DATABASE
         #   valueFrom:
@@ -33,14 +38,7 @@ spec:
         #     secretKeyRef:
         #       name: {{ .Chart.Name }}-secret
         #       key: MONGO_INITDB_ROOT_PASSWORD
-        volumeMounts:
-        - name: mongo-storage
-          mountPath: /data/db  # Đường dẫn mặc định lưu trữ của MongoDB
-      # volumes:
-      # - name: mongo-storage
-      #   persistentVolumeClaim:
-      #     claimName: {{ .Chart.Name }}-pvc
-volumeClaimTemplates:
+  volumeClaimTemplates:
   - metadata:
       name: mongo-storage
     spec:
