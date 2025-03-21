@@ -6,10 +6,10 @@ image:
   pullPolicy: IfNotPresent
 service:
   type: ClusterIP
-  port: 5173
+  port: 80
 configmap:
   data:
-    VITE_API_PATH: "http://project-backend-service:31100"
+    VITE_API_PATH: "http://project-backend-service:8080"
 ingress:
   # className:gce
-  host: ""
+   host: ""
