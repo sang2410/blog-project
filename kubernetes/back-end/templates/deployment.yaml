@@ -31,4 +31,9 @@ spec:
             configMapKeyRef:
               name: {{ .Chart.Name }}-config
               key: REDIS_URL
+        - name: FRONTEND_URL
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Chart.Name }}-config
+              key: FRONTEND_URL
           
