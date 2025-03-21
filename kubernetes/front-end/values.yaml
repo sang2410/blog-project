@@ -1,7 +1,7 @@
-namespace: my-namespace
+namespace: blog
 replicaCount: 1
 image:
-  repository: madhupdevops/wanderlust-frontend-beta
+  repository: nguyenchisang/project-frontend
   tag: "latest"  # Pipeline sẽ cập nhật tag này
   pullPolicy: IfNotPresent
 service:
