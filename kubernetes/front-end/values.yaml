@@ -5,7 +5,7 @@ image:
   tag: "v3"  # Pipeline sẽ cập nhật tag này
   pullPolicy: Always
 service:
-  type: ClusterIP
+  type: Loadbalance
   port: 80
 configmap:
   data:
