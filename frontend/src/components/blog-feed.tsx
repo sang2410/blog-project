@@ -14,7 +14,7 @@ export default function BlogFeed() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log(import.meta.env.VITE_API_PATH); // Kiểm tra giá trị của VITE_API_PATH
+    console.log(http://project-backend-service:8080); // Kiểm tra giá trị của VITE_API_PATH
 
     let categoryEndpoint =
       selectedCategory === 'featured'
@@ -23,7 +23,7 @@ export default function BlogFeed() {
 
     setLoading(true);
     axios
-      .get(import.meta.env.VITE_API_PATH + categoryEndpoint)
+      .get(http://project-backend-service:8080+ categoryEndpoint)
       .then((response) => {
         setPosts(response.data);
         setLoading(false);
@@ -35,7 +35,7 @@ export default function BlogFeed() {
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/posts/latest')
+      .get('http://project-backend-service:8080/api/posts/latest')
       .then((response) => {
         setLatestPosts(response.data);
       })
