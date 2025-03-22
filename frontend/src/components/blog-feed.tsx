@@ -14,34 +14,35 @@ export default function BlogFeed() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log(http://project-backend-service:8080); // Kiểm tra giá trị của VITE_API_PATH
-
-    let categoryEndpoint =
-      selectedCategory === 'featured'
-        ? '/api/posts/featured'
-        : `/api/posts/categories/${selectedCategory}`;
-
-    setLoading(true);
-    axios
-      .get(http://project-backend-service:8080+ categoryEndpoint)
-      .then((response) => {
+    const fetchPosts = async () => {
+      try {
+        const categoryEndpoint =
+          selectedCategory === 'featured'
+            ? '/api/posts/featured'
+            : `/api/posts/categories/${selectedCategory}`;
+        const response = await axios.get(`http://project-backend-service:8080${categoryEndpoint}`); // Sửa lỗi ghép chuỗi URL
         setPosts(response.data);
         setLoading(false);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+        setLoading(false); // Đặt lại loading ngay cả khi có lỗi
+      }
+    };
+
+    fetchPosts();
   }, [selectedCategory]);
 
   useEffect(() => {
-    axios
-      .get('http://project-backend-service:8080/api/posts/latest')
-      .then((response) => {
+    const fetchLatestPosts = async () => {
+      try {
+        const response = await axios.get('http://project-backend-service:8080/api/posts/latest');
         setLatestPosts(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      } catch (error) {
+        console.error('Error fetching latest posts:', error);
+      }
+    };
+
+    fetchLatestPosts();
   }, []);
 
   return (
@@ -57,7 +58,7 @@ export default function BlogFeed() {
               : `Posts related to "${selectedCategory}"`}
           </h1>
           <div className="flex flex-col gap-6">
-            {posts.length === 0 || loading == true
+            {posts.length === 0 || loading
               ? Array(5)
                   .fill(0)
                   .map((_, index) => <FeaturedPostCardSkeleton key={index} />)

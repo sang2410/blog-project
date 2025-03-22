@@ -5,18 +5,21 @@ import PostCard from '@/components/post-card';
 import Post from '@/types/post-type';
 import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
 import Header from '@/layouts/header-layout';
+
 function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    axios
-      .get(http://project-backend-service:8080 + '/api/posts')
-      .then((response) => {
+    const fetchPosts = async () => {
+      try {
+        const response = await axios.get('http://project-backend-service:8080/api/posts'); // Sửa lỗi ghép chuỗi URL
         setPosts(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    fetchPosts();
   }, []);
 
   return (
