@@ -14,5 +14,12 @@ spec:
             name: {{ .Chart.Name }}-service
             port:
               number: {{ .Values.service.port }}
+       - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name:  project-backend-service
+            port:
+              number: 8080        
       
     
