@@ -8,7 +8,7 @@ import authRouter from './routes/auth.js';
 import postsRouter from './routes/posts.js';
 import { connectToRedis } from './services/redis.js';
 const app = express();
-const port = PORT || 5000;
+const port = PORT ;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
