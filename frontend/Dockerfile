@@ -9,12 +9,7 @@ RUN npm run build
 # Serve stage
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
+# Thêm file cấu hình nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Thêm entrypoint script
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
 EXPOSE 80
-ENTRYPOINT ["/entrypoint.sh"]
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["sh", "-c", "echo 'window.API_URL = \"34.101.229.235.8080\";' > /usr/share/nginx/html/config.js && nginx -g 'daemon off;'"]

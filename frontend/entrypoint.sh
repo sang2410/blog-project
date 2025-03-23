@@ -3,7 +3,6 @@
 cat <<EOF > /usr/share/nginx/html/config.js
 window.env = {
   API_URL: "${API_URL}",
-#   APP_ENV: "${APP_ENV}"
 };
 EOF
 
