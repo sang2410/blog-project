@@ -108,6 +108,7 @@ function AddBlog() {
           navigate('/');
         } else {
           toast.error('Lỗi: ' + response.data.message);
+          console.log('api',window.API_URL)
         }
       } catch (err: any) {
         toast.error('Lỗi: ' + err.message);
