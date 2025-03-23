@@ -22,8 +22,8 @@ spec:
         ports:
         - containerPort: {{ .Values.service.port }}
         env:
-        - name: VITE_API_PATH
+        - name: API_URL
           valueFrom:
             configMapKeyRef:
               name: {{ .Chart.Name }}-config
-              key: VITE_API_PATH
+              key: API_URL
