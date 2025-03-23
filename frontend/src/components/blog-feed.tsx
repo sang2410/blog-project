@@ -20,7 +20,7 @@ export default function BlogFeed() {
           selectedCategory === 'featured'
             ? '/api/posts/featured'
             : `/api/posts/categories/${selectedCategory}`;
-        const response = await axios.get(`http://project-backend-service:8080${categoryEndpoint}`); // Sửa lỗi ghép chuỗi URL
+        const response = await axios.get(`${window.API_URL}${categoryEndpoint}`); // Sửa lỗi ghép chuỗi URL
         setPosts(response.data);
         setLoading(false);
       } catch (error) {

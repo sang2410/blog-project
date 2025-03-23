@@ -2,14 +2,14 @@ namespace: blog
 replicaCount: 1
 image:
   repository: nguyenchisang/project-frontend
-  tag: "7"  # Pipeline sẽ cập nhật tag này
+  tag: "v8"  # Pipeline sẽ cập nhật tag này
   pullPolicy: Always
 service:
   type: ClusterIP
   port: 80
 configmap:
   data:
-    API_URL: "http://34.13.77.37/api"
+    API_URL: "34.101.229.235.8080"
 ingress:
   # className:gce
    host: ""
