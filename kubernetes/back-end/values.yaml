@@ -4,7 +4,7 @@ image:
   tag: "v25"  # Pipeline sẽ cập nhật tag này
   pullPolicy: Always
 service:
-  type: LoadBlancer
+  type: LoadBalancer
   port: 8080  # Thay đổi port nếu backend dùng port khác
 configmap:
   mongodbUri: "mongodb://project-database-service:27017"
