@@ -2,6 +2,9 @@ FROM node:21 AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
+# Truyền biến môi trường vào build
+ARG VITE_API_PATH
+ENV VITE_API_PATH=${VITE_API_PATH}
 COPY . .
 RUN npm run build
 
@@ -9,4 +12,4 @@ FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
-CMD ["sh", "-c", "echo 'window.API_URL = \"${VITE_API_PATH}\";' > /usr/share/nginx/html/config.js && nginx -g 'daemon off;'"]
+CMD ["nginx", "-g", "daemon off;"]
