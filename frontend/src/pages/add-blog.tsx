@@ -101,7 +101,7 @@ function AddBlog() {
     e.preventDefault();
     if (validateFormData()) {
       try {
-        const response = await axios.post('http://project-backend-service:8080/api/posts/', formData); // Sửa lỗi ghép chuỗi URL
+        const response = await axios.post(`${window.API_URL}/api/posts/`, formData); // Sửa lỗi ghép chuỗi URL
 
         if (response.status === 200) {
           toast.success('Bài viết blog đã được tạo thành công!');

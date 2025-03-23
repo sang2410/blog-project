@@ -12,7 +12,7 @@ function HomePage() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.get('http://project-backend-service:8080/api/posts'); // Sửa lỗi ghép chuỗi URL
+        const response = await axios.get(`${window.API_URL}/api/posts`); // Sửa lỗi ghép chuỗi URL
         setPosts(response.data);
       } catch (error) {
         console.error('Error fetching posts:', error);

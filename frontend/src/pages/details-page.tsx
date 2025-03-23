@@ -16,7 +16,7 @@ export default function DetailsPage() {
   useEffect(() => {
     const getPostById = async () => {
       try {
-        const response = await axios.get(`http://project-backend-service:8080/api/posts/${postId}`); // Sửa lỗi ghép chuỗi URL
+        const response = await axios.get(`${window.API_URL}/api/posts/${postId}`); // Sửa lỗi ghép chuỗi URL
         console.log(response.data);
         setPost(response.data);
         setIsLoading(false);

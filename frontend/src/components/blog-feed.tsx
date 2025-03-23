@@ -35,7 +35,7 @@ export default function BlogFeed() {
   useEffect(() => {
     const fetchLatestPosts = async () => {
       try {
-        const response = await axios.get('http://project-backend-service:8080/api/posts/latest');
+        const response = await axios.get(`${window.API_URL}/api/posts/latest'`);
         setLatestPosts(response.data);
       } catch (error) {
         console.error('Error fetching latest posts:', error);
