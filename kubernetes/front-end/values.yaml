@@ -2,11 +2,7 @@ namespace: blog
 replicaCount: 1
 image:
   repository: nguyenchisang/project-frontend
-<<<<<<< HEAD
-  tag: "v12"  # Pipeline sẽ cập nhật tag này
-=======
-  tag: "v13"  # Pipeline sẽ cập nhật tag này
->>>>>>> 079fa9cee2fed1a6149f3e11d5d9587bac73e2a2
+  tag: "v15"  # Pipeline sẽ cập nhật tag này
   pullPolicy: Always
 service:
   type: ClusterIP
