@@ -10,7 +10,7 @@ function HomePage() {
 
   useEffect(() => {
     axios
-      .get(window.API_URL + '/api/posts')
+      .get(import.meta.env.VITE_API_PATH + '/api/posts')
       .then((response) => {
         setPosts(response.data);
       })
