@@ -21,7 +21,8 @@ export default function BlogFeed() {
 
     setLoading(true);
     axios
-      .get(import.meta.env.VITE_API_PATH + categoryEndpoint)
+    const config = await import('/config.js');
+      .get(config.API_URL + categoryEndpoint)
       .then((response) => {
         setPosts(response.data);
         setLoading(false);
@@ -33,7 +34,8 @@ export default function BlogFeed() {
 
   useEffect(() => {
     axios
-      .get(import.meta.env.VITE_API_PATH + '/api/posts/latest')
+    const config = await import('/config.js');
+      .get(config.API_URL + '/api/posts/latest')
       .then((response) => {
         setLatestPosts(response.data);
       })

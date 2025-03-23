@@ -16,7 +16,8 @@ export default function DetailsPage() {
   useEffect(() => {
     const getPostById = async () => {
       try {
-        await axios.get(import.meta.env.VITE_API_PATH+ `/api/posts/${postId}`).then((response) => {
+        const config = await import('/config.js');
+        await axios.get(config.API_URL + `/api/posts/${postId}`).then((response) => {
           console.log(response.data);
           setIsLoading(false);
           setPost(response.data);

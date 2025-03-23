@@ -1,15 +1,15 @@
+# Build stage
 FROM node:21 AS build
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
-# Truyền biến môi trường vào build
-ARG VITE_API_PATH
-ENV VITE_API_PATH=${VITE_API_PATH}
 COPY . .
 RUN npm run build
 
+# Serve stage
 FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Tạo file config.js dạng ES module hoặc JSON
+CMD ["sh", "-c", "echo 'export const API_URL = \"${VITE_API_PATH:-http://default-api:8080}\";' > /usr/share/nginx/html/config.js && nginx -g 'daemon off;'"]
