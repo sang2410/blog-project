@@ -9,7 +9,7 @@ service:
   port: 80
 configmap:
   data:
-    API_URL: "34.101.229.235.8080"
+    API_URL: http://project-backend-service:8080
 ingress:
   # className:gce
    host: ""
