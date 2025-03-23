@@ -9,7 +9,7 @@ service:
   port: 80
 configmap:
   data:
-    VITE_API_PATH: http://project-backend-service:8080
+    VITE_API_PATH: "http://project-backend-service:8080"
 ingress:
   # className:gce
    host: ""
