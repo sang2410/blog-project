@@ -17,7 +17,6 @@ type FormData = {
   description: string;
   isFeaturedPost: boolean;
 };
-
 function AddBlog() {
   const [selectedImage, setSelectedImage] = useState<string>('');
 
@@ -25,7 +24,7 @@ function AddBlog() {
     setSelectedImage(imageUrl);
   };
 
-  const [modal, setModal] = useState(false); // Sửa "setmodal" thành "setModal" để nhất quán
+  const [modal, setmodal] = useState(false);
   const [formData, setFormData] = useState<FormData>({
     title: '',
     authorName: '',
@@ -35,7 +34,7 @@ function AddBlog() {
     isFeaturedPost: false,
   });
 
-  // Kiểm tra độ dài mảng categories và xem category đã được chọn chưa
+  //checks the length of the categories array and if the category is already selected
   const isValidCategory = (category: string): boolean => {
     return formData.categories.length >= 3 && !formData.categories.includes(category);
   };
@@ -61,18 +60,16 @@ function AddBlog() {
     }
   };
 
-  const handleSelector = () => { // Sửa "handleselector" thành "handleSelector" để nhất quán
+  const handleselector = () => {
     setFormData({
       ...formData,
       imageLink: selectedImage,
     });
-    setModal(false);
+    setmodal(false);
   };
-
   const handleCheckboxChange = () => {
     setFormData({ ...formData, isFeaturedPost: !formData.isFeaturedPost });
   };
-
   const validateFormData = () => {
     if (
       !formData.title ||
@@ -81,44 +78,40 @@ function AddBlog() {
       !formData.description ||
       formData.categories.length === 0
     ) {
-      toast.error('Tất cả các trường phải được điền đầy đủ.');
+      toast.error('All fields must be filled out.');
       return false;
     }
     const imageLinkRegex = /\.(jpg|jpeg|png|webp)$/i;
     if (!imageLinkRegex.test(formData.imageLink)) {
-      toast.error('URL hình ảnh phải kết thúc bằng .jpg, .jpeg, .webp hoặc .png');
+      toast.error('Image URL must end with .jpg, .jpeg, .webp or .png');
       return false;
     }
     if (formData.categories.length > 3) {
-      toast.error('Chọn tối đa ba danh mục.');
+      toast.error('Select up to three categories.');
       return false;
     }
 
     return true;
   };
-
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (validateFormData()) {
       try {
-        const response = await axios.post(`${window.API_URL}/api/posts/`, formData); // Sửa lỗi ghép chuỗi URL
+        const response = await axios.post(import.meta.env.VITE_API_PATH + '/api/posts/', formData);
 
         if (response.status === 200) {
-          toast.success('Bài viết blog đã được tạo thành công!');
+          toast.success('Blog post successfully created!');
           navigate('/');
         } else {
-          toast.error('Lỗi: ' + response.data.message);
-          console.log('api',window.API_URL)
+          toast.error('Error: ' + response.data.message);
         }
       } catch (err: any) {
-        toast.error('Lỗi: ' + err.message);
+        toast.error('Error: ' + err.message);
       }
     }
   };
-
   const navigate = useNavigate();
   const [isDarkMode, setIsDarkMode] = useState<boolean | null>(null);
-
   useEffect(() => {
     const storedTheme = localStorage.getItem('theme');
     setIsDarkMode(storedTheme === 'dark');
@@ -140,7 +133,7 @@ function AddBlog() {
             />
           </div>
           <h2 className="cursor-text text-lg font-semibold text-light-primary dark:text-dark-primary md:text-xl lg:text-2xl">
-            Tạo Blog
+            Create Blog
           </h2>
         </div>
       </div>
@@ -149,7 +142,7 @@ function AddBlog() {
           <div className="mb-2 flex items-center">
             <label className="flex items-center">
               <span className="px-2 text-base font-medium text-light-secondary dark:text-dark-secondary">
-                Đây có phải là bài blog nổi bật không?
+                Is this a featured blog?
               </span>
               <input
                 type="checkbox"
@@ -163,12 +156,12 @@ function AddBlog() {
 
           <div className="mb-2">
             <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
-              Tiêu đề blog <Asterisk />
+              Blog title <Asterisk />
             </div>
             <input
               type="text"
               name="title"
-              placeholder="Danh sách địa điểm du lịch trong năm nay"
+              placeholder="Travel Bucket List for this Year"
               autoComplete="off"
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
               value={formData.title}
@@ -178,11 +171,11 @@ function AddBlog() {
 
           <div className="mb-1">
             <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
-              Nội dung blog <Asterisk />
+              Blog content <Asterisk />
             </div>
             <textarea
               name="description"
-              placeholder="Bắt đầu viết tại đây…"
+              placeholder="Start writing here&hellip;"
               rows={5}
               className="w-full rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary"
               value={formData.description}
@@ -192,7 +185,7 @@ function AddBlog() {
 
           <div className="mb-2">
             <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
-              Tên tác giả <Asterisk />
+              Author name <Asterisk />
             </div>
             <input
               type="text"
@@ -205,9 +198,9 @@ function AddBlog() {
           </div>
 
           <div className="px-2 py-1 font-medium text-light-secondary dark:text-dark-secondary">
-            Hình ảnh bìa blog
+            Blog cover image
             <span className="text-xs tracking-wide text-dark-tertiary">
-               (jpg/png/webp) 
+              &nbsp;(jpg/png/webp)&nbsp;
             </span>
             <Asterisk />
           </div>
@@ -216,7 +209,7 @@ function AddBlog() {
               type="url"
               id="imagelink"
               name="imageLink"
-              placeholder="https://…"
+              placeholder="https://&hellip;"
               autoComplete="off"
               className="w-3/4 rounded-lg bg-slate-200 p-3 placeholder:text-sm placeholder:text-light-tertiary dark:bg-dark-card dark:text-slate-50 dark:placeholder:text-dark-tertiary lg:w-10/12"
               value={formData.imageLink}
@@ -226,17 +219,17 @@ function AddBlog() {
               type="button"
               className="lg:text-md active:scale-click w-1/4 rounded-lg bg-light-primary text-xs text-slate-50 hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 md:text-sm lg:w-2/12 lg:px-4 lg:py-3"
               onClick={() => {
-                setModal(true);
+                setmodal(true);
               }}
             >
-              Chọn hình ảnh
+              Pick image
             </button>
           </div>
           <div className="mb-4 flex flex-col">
             <label className="px-2 pb-1 font-medium text-light-secondary dark:text-dark-secondary md:mr-4 md:w-fit">
-              Danh mục
+              Categories
               <span className="text-xs tracking-wide text-dark-tertiary">
-                 (tối đa 3 danh mục) 
+                &nbsp;(max 3 categories)&nbsp;
               </span>
               <Asterisk />
             </label>
@@ -257,14 +250,14 @@ function AddBlog() {
             type="submit"
             className="active:scale-click flex w-full items-center justify-center rounded-lg bg-light-primary px-12 py-3 text-base font-semibold text-light hover:bg-light-primary/80 dark:bg-dark-primary dark:text-dark-card dark:hover:bg-dark-secondary/80 md:mx-1 md:w-fit"
           >
-            Đăng blog
+            Post blog
           </button>
         </form>
         <ModalComponent
           selectedImage={selectedImage}
           handleImageSelect={handleImageSelect}
-          handleSelector={handleSelector} // Sửa để khớp với tên hàm
-          setModal={setModal} // Sửa để khớp với tên hàm
+          handleSelector={handleselector}
+          setModal={setmodal}
           modal={modal}
         />
       </div>

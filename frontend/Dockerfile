@@ -12,4 +12,5 @@ COPY --from=build /app/dist /usr/share/nginx/html
 # Thêm file cấu hình nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 EXPOSE 80
-CMD ["sh", "-c", "echo 'window.API_URL = \"34.101.229.235.8080\";' > /usr/share/nginx/html/config.js && nginx -g 'daemon off;'"]
+# Tạo file config.js từ biến môi trường trong quá trình runtime
+CMD ["sh", "-c", "echo '. = \"${VITE_API_PATH}\";' > /usr/share/nginx/html/config.js && nginx -g 'daemon off;'"]

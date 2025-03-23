@@ -14,35 +14,32 @@ export default function BlogFeed() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const categoryEndpoint =
-          selectedCategory === 'featured'
-            ? '/api/posts/featured'
-            : `/api/posts/categories/${selectedCategory}`;
-        const response = await axios.get(`${window.API_URL}${categoryEndpoint}`); // Sửa lỗi ghép chuỗi URL
+    let categoryEndpoint =
+      selectedCategory === 'featured'
+        ? '/api/posts/featured'
+        : `/api/posts/categories/${selectedCategory}`;
+
+    setLoading(true);
+    axios
+      .get(import.meta.env.VITE_API_PATH + categoryEndpoint)
+      .then((response) => {
         setPosts(response.data);
         setLoading(false);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-        setLoading(false); // Đặt lại loading ngay cả khi có lỗi
-      }
-    };
-
-    fetchPosts();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, [selectedCategory]);
 
   useEffect(() => {
-    const fetchLatestPosts = async () => {
-      try {
-        const response = await axios.get(`${window.API_URL}/api/posts/latest'`);
+    axios
+      .get(import.meta.env.VITE_API_PATH + '/api/posts/latest')
+      .then((response) => {
         setLatestPosts(response.data);
-      } catch (error) {
-        console.error('Error fetching latest posts:', error);
-      }
-    };
-
-    fetchLatestPosts();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   return (
@@ -58,7 +55,7 @@ export default function BlogFeed() {
               : `Posts related to "${selectedCategory}"`}
           </h1>
           <div className="flex flex-col gap-6">
-            {posts.length === 0 || loading
+            {posts.length === 0 || loading == true
               ? Array(5)
                   .fill(0)
                   .map((_, index) => <FeaturedPostCardSkeleton key={index} />)

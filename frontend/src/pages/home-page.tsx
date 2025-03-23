@@ -5,21 +5,18 @@ import PostCard from '@/components/post-card';
 import Post from '@/types/post-type';
 import { PostCardSkeleton } from '@/components/skeletons/post-card-skeleton';
 import Header from '@/layouts/header-layout';
-
 function HomePage() {
   const [posts, setPosts] = useState<Post[]>([]);
 
   useEffect(() => {
-    const fetchPosts = async () => {
-      try {
-        const response = await axios.get(`${window.API_URL}/api/posts`); // Sửa lỗi ghép chuỗi URL
+    axios
+      .get(import.meta.env.VITE_API_PATH + '/api/posts')
+      .then((response) => {
         setPosts(response.data);
-      } catch (error) {
-        console.error('Error fetching posts:', error);
-      }
-    };
-
-    fetchPosts();
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   }, []);
 
   return (
