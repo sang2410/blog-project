@@ -1,12 +1,23 @@
 replicaCount: 2
 image:
   repository: nguyenchisang/project-backend
-  tag: "v25"  # Pipeline sẽ cập nhật tag này
+  tag: "3"  # Pipeline sẽ cập nhật tag này
   pullPolicy: Always
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 8080  # Thay đổi port nếu backend dùng port khác
 configmap:
   mongodbUri: "mongodb://project-database-service:27017"
   redisUrl: "redis://project-redis-service:6379"
   FRONTEND_URL: "http://project-frontend-service:5173"
+resources:
+  requests:
+    memory: "128Mi"
+    cpu: "100m"
+  limits:
+    memory: "256Mi"
+    cpu: "200m"
+hpa:
+  minReplicas: 2
+  maxReplicas: 4
+  cpuUtilization: 60

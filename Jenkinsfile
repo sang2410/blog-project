@@ -108,23 +108,25 @@ pipeline {
                 }
             }
         }
-        // stage('Update: Git Manifest') {
-        //     steps {
-        //         script {
-        //             withCredentials([usernamePassword(credentialsId: 'git-cred', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-        //                 sh """
-        //                     git config user.email "chisang24102000@gmail.com"
-        //                     git config user.name "sang"
-        //                     sed -i 's|image: ${DOCKER_REGISTRY}/${FRONTEND_APP}:.*|image: ${DOCKER_REGISTRY}/${FRONTEND_APP}:${params.FRONTEND_DOCKER_TAG}|g' kubernetes/frontend-deployment.yaml
-        //                     sed -i 's|image: ${DOCKER_REGISTRY}/${BACKEND_APP}:.*|image: ${DOCKER_REGISTRY}/${BACKEND_APP}:${params.BACKEND_DOCKER_TAG}|g' kubernetes/backend-deployment.yaml
-        //                     git add kubernetes/*.yaml
-        //                     git commit -m "Update frontend to ${params.FRONTEND_DOCKER_TAG} and backend to ${params.BACKEND_DOCKER_TAG}"
-        //                     git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/sang2410/blog-project.git main
-        //                 """
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Update: Git Manifest') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'git-cred', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                        sh """
+                            git config user.email "chisang24102000@gmail.com"
+                            git config user.name "sang"
+                            cd kubernetes/helm/frontend
+                            sed -i 's|image: ${DOCKER_REGISTRY}/${FRONTEND_APP}:.*|image: ${DOCKER_REGISTRY}/${FRONTEND_APP}:${params.FRONTEND_DOCKER_TAG}|g' values.yaml
+                            cd ../backend
+                            sed -i 's|image: ${DOCKER_REGISTRY}/${BACKEND_APP}:.*|image: ${DOCKER_REGISTRY}/${BACKEND_APP}:${params.BACKEND_DOCKER_TAG}|g' values.yaml
+                            git add ../frontend/values.yaml ../backend/values.yam
+                            git commit -m "Update frontend to ${params.FRONTEND_DOCKER_TAG} and backend to ${params.BACKEND_DOCKER_TAG}"
+                            git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/sang2410/blog-project.git main
+                        """
+                    }
+                }
+            }
+        }
     }
     post {
         always {

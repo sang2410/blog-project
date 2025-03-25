@@ -21,9 +21,17 @@ spec:
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: {{ .Values.service.port }}
-        env:
-        - name: API_URL
-          valueFrom:
-            configMapKeyRef:
-              name: {{ .Chart.Name }}-config
-              key: API_URL
+        resources:
+          requests:
+            memory: {{ .Values.resources.requests.memory }}
+            cpu: {{ .Values.resources.requests.cpu }}
+          limits:
+            memory: {{ .Values.resources.limits.memory }}
+            cpu: {{ .Values.resources.limits.cpu }}
+        # env:
+        # - name: API_URL
+        #   valueFrom:
+        #     configMapKeyRef:
+        #       name: {{ .Chart.Name }}-config
+        #       key: API_URL
+

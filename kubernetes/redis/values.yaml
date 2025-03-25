@@ -1,4 +1,5 @@
 replicaCount: 1
+namespace: blog
 image:
   repository: redis
   tag: "7.0"
@@ -9,3 +10,11 @@ service:
 # secret:
 #   data:
 #     REDIS_PASSWORD: "cmVkaXNwYXNz"  # base64: "redispass"
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
+

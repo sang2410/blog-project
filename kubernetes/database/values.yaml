@@ -1,4 +1,5 @@
-replicaCount: 2
+replicaCount: 1
+namespace: blog
 image:
   repository: mongo
   tag: "6.0"  # Phiên bản MongoDB
@@ -18,3 +19,10 @@ persistence:
   storageClass: "standard"  # StorageClass mặc định của GKE
   accessMode: ReadWriteOnce
   size: 10Gi
+resources:
+  requests:
+    memory: "256Mi"
+    cpu: "250m"
+  limits:
+    memory: "512Mi"
+    cpu: "500m"
