@@ -3,7 +3,7 @@ replicaCount: 1
 
 image:
   repository: mariadb
-  tag: "10.5"
+  tag: "latest"
   pullPolicy: IfNotPresent
 
 service:
