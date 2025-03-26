@@ -1,0 +1,21 @@
+namespace: ecommerce
+replicaCount: 1
+
+image:
+  repository: mariadb
+  tag: "10.5"
+  pullPolicy: IfNotPresent
+
+service:
+  type: NodePort        
+  port: 3306           
+  nodePort: 30306 
+persistence:
+  enabled: true
+  size: 8Gi
+
+credentials:
+  rootPassword: "my-secret-pw"
+  database: "mydb"
+  user: "myuser"
+  password: "mypassword"

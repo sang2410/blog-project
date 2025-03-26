@@ -1,7 +1,7 @@
 replicaCount: 2
 image:
   repository: nguyenchisang/project-backend
-  tag: "v25"  # Pipeline sẽ cập nhật tag này
+  tag: "1"  # Pipeline sẽ cập nhật tag này
   pullPolicy: Always
 service:
   type: LoadBalancer
