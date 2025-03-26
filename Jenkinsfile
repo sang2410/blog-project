@@ -119,7 +119,7 @@ pipeline {
                             sed -i 's|image: ${DOCKER_REGISTRY}/${FRONTEND_APP}:.*|image: ${DOCKER_REGISTRY}/${FRONTEND_APP}:${params.FRONTEND_DOCKER_TAG}|g' values.yaml
                             cd ../back-end
                             sed -i 's|image: ${DOCKER_REGISTRY}/${BACKEND_APP}:.*|image: ${DOCKER_REGISTRY}/${BACKEND_APP}:${params.BACKEND_DOCKER_TAG}|g' values.yaml
-                            git add .
+                            git add kubernetes/front-end/values.yaml kubernetes/back-end/values.yaml
                             git commit -m "Update frontend to ${params.FRONTEND_DOCKER_TAG} and backend to ${params.BACKEND_DOCKER_TAG}"
                             git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/sang2410/blog-project.git main
                         """
