@@ -112,13 +112,14 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'git-cred', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                        sh """
+                         sh """
                             git config user.email "chisang24102000@gmail.com"
                             git config user.name "sang"
                             cd kubernetes/front-end
-                            sed -i 's|image: ${DOCKER_REGISTRY}/${FRONTEND_APP}:.*|image: ${DOCKER_REGISTRY}/${FRONTEND_APP}:${params.FRONTEND_DOCKER_TAG}|g' values.yaml
+                            sed -i 's|tag: ".*"|tag: "${params.FRONTEND_DOCKER_TAG}"|g' values.yaml
                             cd ../back-end
-                            sed -i 's|image: ${DOCKER_REGISTRY}/${BACKEND_APP}:.*|image: ${DOCKER_REGISTRY}/${BACKEND_APP}:${params.BACKEND_DOCKER_TAG}|g' values.yaml
+                            sed -i 's|tag: ".*"|tag: "${params.BACKEND_DOCKER_TAG}"|g' values.yaml
+                            cd ../../
                             git add kubernetes/front-end/values.yaml kubernetes/back-end/values.yaml
                             git commit -m "Update frontend to ${params.FRONTEND_DOCKER_TAG} and backend to ${params.BACKEND_DOCKER_TAG}"
                             git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/sang2410/blog-project.git main
