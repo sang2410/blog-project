@@ -15,7 +15,7 @@ persistence:
   size: 9Gi
 
 credentials:
-  rootPassword: "my-secret-pw"
+  rootPassword: "anhduy2000"
   database: "mydb"
-  user: "myuser"
-  password: "mypassword"
+  user: "duy"
+  password: "anhduy2000"
