@@ -25,61 +25,61 @@ pipeline {
                 git branch: 'main', url: "${GIT_REPO}"
             }
         }
-        // stage('Run Tests') {
-        //     parallel {
-        //         stage('Frontend Tests') {
-        //             steps {
-        //                 dir('frontend') {
-        //                     sh 'npm install'
-        //                     sh 'npm test'
-        //                 }
-        //             }
-        //         }
-        //         stage('Backend Tests') {
-        //             steps {
-        //                 dir('backend') {
-        //                     sh 'npm install'
-        //                     sh 'npm test'
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
-        // stage("SonarQube: Code Analysis") {
-        //     steps {
-        //         dir('frontend') {
-        //             withSonarQubeEnv('sonar-server') {
-        //                 sh "$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=front-end-blog -Dsonar.sources=."
-        //             }
-        //         }
-        //         dir('backend') {
-        //             withSonarQubeEnv('sonar-server') {
-        //                 sh "$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=back-end-blog -Dsonar.sources=."
-        //             }
-        //         }
-        //     }
-        // }
-        // stage("SonarQube: Code Quality Gates") {
-        //     steps {
-        //         waitForQualityGate abortPipeline: true
-        //     }
-        // }
-        // stage("OWASP: Dependency check") {
-        //     steps {
-        //         dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'OWASP'
-        //         dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
-        //     }
-        // }
-        // stage("Trivy File Scan") {
-        //     steps {
-        //         dir('backend') {
-        //             sh 'trivy fs . > trivyfs-backend.txt'
-        //         }
-        //         dir('frontend') {
-        //             sh 'trivy fs . > trivyfs-frontend.txt'
-        //         }
-        //     }
-        // }
+        stage('Run Tests') {
+            parallel {
+                stage('Frontend Tests') {
+                    steps {
+                        dir('frontend') {
+                            sh 'npm install'
+                            sh 'npm test'
+                        }
+                    }
+                }
+                stage('Backend Tests') {
+                    steps {
+                        dir('backend') {
+                            sh 'npm install'
+                            sh 'npm test'
+                        }
+                    }
+                }
+            }
+        }
+        stage("SonarQube: Code Analysis") {
+            steps {
+                dir('frontend') {
+                    withSonarQubeEnv('sonar-server') {
+                        sh "$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=front-end-blog -Dsonar.sources=."
+                    }
+                }
+                dir('backend') {
+                    withSonarQubeEnv('sonar-server') {
+                        sh "$SCANNER_HOME/bin/sonar-scanner -Dsonar.projectKey=back-end-blog -Dsonar.sources=."
+                    }
+                }
+            }
+        }
+        stage("SonarQube: Code Quality Gates") {
+            steps {
+                waitForQualityGate abortPipeline: true
+            }
+        }
+        stage("OWASP: Dependency check") {
+            steps {
+                dependencyCheck additionalArguments: '--scan ./', odcInstallation: 'OWASP'
+                dependencyCheckPublisher pattern: '**/dependency-check-report.xml'
+            }
+        }
+        stage("Trivy File Scan") {
+            steps {
+                dir('backend') {
+                    sh 'trivy fs . > trivyfs-backend.txt'
+                }
+                dir('frontend') {
+                    sh 'trivy fs . > trivyfs-frontend.txt'
+                }
+            }
+        }
         stage('Docker Image Build') {
             steps {
                 dir('frontend') {
@@ -94,12 +94,12 @@ pipeline {
                 }
             }
         }
-        // stage('Trivy Image Scan') {
-        //     steps {
-        //         sh "trivy image  ${DOCKER_REGISTRY}/${FRONTEND_APP}:${params.FRONTEND_DOCKER_TAG} > trivyimage-frontend.txt"
-        //         sh "trivy image  ${DOCKER_REGISTRY}/${BACKEND_APP}:${params.BACKEND_DOCKER_TAG} > trivyimage-backend.txt"
-        //     }
-        // }
+        stage('Trivy Image Scan') {
+            steps {
+                sh "trivy image  ${DOCKER_REGISTRY}/${FRONTEND_APP}:${params.FRONTEND_DOCKER_TAG} > trivyimage-frontend.txt"
+                sh "trivy image  ${DOCKER_REGISTRY}/${BACKEND_APP}:${params.BACKEND_DOCKER_TAG} > trivyimage-backend.txt"
+            }
+        }
         stage("Docker: Push to DockerHub") {
             steps {
                 withDockerRegistry(credentialsId: 'docker-cred', url: 'https://index.docker.io/v1/') {
