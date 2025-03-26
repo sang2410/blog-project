@@ -24,15 +24,15 @@ spec:
             secretKeyRef:
               name: {{ .Release.Name }}-mariadb-secret
               key: rootPassword
-        - name: MYSQL_DATABASE
-          value: {{ .Values.credentials.database }}
-        - name: MYSQL_USER
-          value: {{ .Values.credentials.user }}
-        - name: MYSQL_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: {{ .Release.Name }}-mariadb-secret
-              key: password
+        # - name: MYSQL_DATABASE
+        #   value: {{ .Values.credentials.database }}
+        # - name: MYSQL_USER
+        #   value: {{ .Values.credentials.user }}
+        # - name: MYSQL_PASSWORD
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: {{ .Release.Name }}-mariadb-secret
+        #       key: password
         ports:
         - containerPort: 3306
         volumeMounts:
