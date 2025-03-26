@@ -23,7 +23,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: {{ .Release.Name }}-mariadb-secret
-              key: rootPassword
+              key: password 
         # - name: MYSQL_DATABASE
         #   value: {{ .Values.credentials.database }}
         # - name: MYSQL_USER
