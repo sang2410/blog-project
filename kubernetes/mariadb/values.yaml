@@ -12,7 +12,7 @@ persistence:
   size: 9Gi
 
 mariadb:
-  password:"anhduy2000"
+  password: "anhduy2000"
   # database: "pos_app"
   # user: "duy"
   # password: "anhduy2000"
