@@ -23,7 +23,7 @@ spec:
           valueFrom:
             secretKeyRef:
               name: {{ .Release.Name }}-mariadb-secret
-              key: password 
+              value: "anhduy2000" 
         ports:
         - containerPort: 3306
         volumeMounts:
