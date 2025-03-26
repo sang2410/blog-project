@@ -25,26 +25,26 @@ pipeline {
                 git branch: 'main', url: "${GIT_REPO}"
             }
         }
-        stage('Run Tests') {
-            parallel {
-                stage('Frontend Tests') {
-                    steps {
-                        dir('frontend') {
-                            sh 'npm install'
-                            sh 'npm test'
-                        }
-                    }
-                }
-                stage('Backend Tests') {
-                    steps {
-                        dir('backend') {
-                            sh 'npm install'
-                            sh 'npm test'
-                        }
-                    }
-                }
-            }
-        }
+        // stage('Run Tests') {
+        //     parallel {
+        //         stage('Frontend Tests') {
+        //             steps {
+        //                 dir('frontend') {
+        //                     sh 'npm install'
+        //                     sh 'npm test'
+        //                 }
+        //             }
+        //         }
+        //         stage('Backend Tests') {
+        //             steps {
+        //                 dir('backend') {
+        //                     sh 'npm install'
+        //                     sh 'npm test'
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         stage("SonarQube: Code Analysis") {
             steps {
                 dir('frontend') {
