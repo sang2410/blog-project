@@ -2,7 +2,7 @@ namespace: blog
 replicaCount: 1
 image:
   repository: nguyenchisang/project-frontend
-  tag: "1"  # Pipeline sẽ cập nhật tag này
+  tag: "v1"  # Pipeline sẽ cập nhật tag này
   pullPolicy: Always
 service:
   type: ClusterIP
