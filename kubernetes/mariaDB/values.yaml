@@ -12,7 +12,7 @@ service:
   nodePort: 30306 
 persistence:
   enabled: true
-  size: 8Gi
+  size: 9Gi
 
 credentials:
   rootPassword: "my-secret-pw"
