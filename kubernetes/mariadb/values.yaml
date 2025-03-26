@@ -16,6 +16,6 @@ persistence:
 
 credentials:
   rootPassword: "anhduy2000"
-  database: "mydb"
+  database: "pos_app"
   user: "duy"
   password: "anhduy2000"
