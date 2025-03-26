@@ -115,11 +115,11 @@ pipeline {
                         sh """
                             git config user.email "chisang24102000@gmail.com"
                             git config user.name "sang"
-                            cd kubernetes/frontend
+                            cd kubernetes/front-end
                             sed -i 's|image: ${DOCKER_REGISTRY}/${FRONTEND_APP}:.*|image: ${DOCKER_REGISTRY}/${FRONTEND_APP}:${params.FRONTEND_DOCKER_TAG}|g' values.yaml
-                            cd ../backend
+                            cd ../back-end
                             sed -i 's|image: ${DOCKER_REGISTRY}/${BACKEND_APP}:.*|image: ${DOCKER_REGISTRY}/${BACKEND_APP}:${params.BACKEND_DOCKER_TAG}|g' values.yaml
-                            git add ../frontend/values.yaml ../backend/values.yam
+                            git add ../front-end/values.yaml ../back-end/values.yam
                             git commit -m "Update frontend to ${params.FRONTEND_DOCKER_TAG} and backend to ${params.BACKEND_DOCKER_TAG}"
                             git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/sang2410/blog-project.git main
                         """
