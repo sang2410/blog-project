@@ -7,9 +7,6 @@ image:
 service:
   type: ClusterIP
   port: 80
-# configmap:
-#   data:
-#     API_URL: "http://34.50.75.104:8080"
 ingress:
   # className:gce
    host: ""

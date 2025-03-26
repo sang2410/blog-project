@@ -115,7 +115,7 @@ pipeline {
                         sh """
                             git config user.email "chisang24102000@gmail.com"
                             git config user.name "sang"
-                            cd kubernetes/helm/frontend
+                            cd kubernetes/frontend
                             sed -i 's|image: ${DOCKER_REGISTRY}/${FRONTEND_APP}:.*|image: ${DOCKER_REGISTRY}/${FRONTEND_APP}:${params.FRONTEND_DOCKER_TAG}|g' values.yaml
                             cd ../backend
                             sed -i 's|image: ${DOCKER_REGISTRY}/${BACKEND_APP}:.*|image: ${DOCKER_REGISTRY}/${BACKEND_APP}:${params.BACKEND_DOCKER_TAG}|g' values.yaml
