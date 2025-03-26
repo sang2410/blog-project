@@ -14,8 +14,8 @@ persistence:
   enabled: true
   size: 9Gi
 
-credentials:
-  rootPassword: "anhduy2000"
+mariadb:
+  password: "anhduy2000"
   # database: "pos_app"
   # user: "duy"
   # password: "anhduy2000"
