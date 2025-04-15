@@ -1,0 +1,18 @@
+namespace: ecommerce
+replicaCount: 2
+image:
+  repository: mariadb
+  tag: "latest"
+  pullPolicy: IfNotPresent
+service:
+  type: NodePort        
+  port: 3306           
+  nodePort: 30306 
+persistence:
+  size: 9Gi
+
+mariadb:
+  password: "anhduy2000"
+#   # database: "pos_app"
+#   # user: "duy"
+#   # password: "anhduy2000"
